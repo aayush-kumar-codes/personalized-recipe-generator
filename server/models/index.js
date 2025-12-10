@@ -2,16 +2,12 @@ const mongoose = require('mongoose');
 
 const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/mydatabase';
 
-mongoose.connect(mongoURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-.then(() => {
-    console.log('MongoDB connected successfully');
-})
-.catch(err => {
-    console.error('MongoDB connection error:', err);
-});
+mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('MongoDB connected successfully'))
+    .catch(err => {
+        console.error('MongoDB connection error:', err);
+        process.exit(1);
+    });
 
 const userSchema = new mongoose.Schema({
     name: {
