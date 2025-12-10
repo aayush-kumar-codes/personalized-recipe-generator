@@ -1,68 +1,34 @@
 const express = require('express');
 const router = express.Router();
-const Recipe = require('../models/Recipe');
+const Recipe = require('../models/Recipe'); // Assuming Recipe model is defined in models/Recipe.js
+const mongoose = require('mongoose');
 
-// Create a new recipe
-router.post('/', async (req, res) => {
-    const { title, ingredients, instructions, userId } = req.body;
-    try {
-        const newRecipe = new Recipe({ title, ingredients, instructions, userId });
-        await newRecipe.save();
-        res.status(201).json(newRecipe);
-    } catch (error) {
-        res.status(500).json({ message: 'Error creating recipe', error });
+// POST route to get recipe suggestions based on ingredients and dietary preferences
+router.post('/suggest', async (req, res) => {
+    const { ingredients, dietaryPreferences } = req.body;
+
+    // Validate input
+    if (!ingredients || !Array.isArray(ingredients) || ingredients.length === 0) {
+        return res.status(400).json({ error: 'Ingredients must be a non-empty array.' });
     }
-});
 
-// Get all recipes
-router.get('/', async (req, res) => {
     try {
-        const recipes = await Recipe.find().populate('userId', 'username');
-        res.status(200).json(recipes);
-    } catch (error) {
-        res.status(500).json({ message: 'Error fetching recipes', error });
-    }
-});
+        // Find recipes that match the ingredients and dietary preferences
+        const recipes = await Recipe.find({
+            ingredients: { $all: ingredients },
+            dietaryPreferences: { $in: dietaryPreferences }
+        });
 
-// Rate a recipe
-router.post('/:id/rate', async (req, res) => {
-    const { rating, userId } = req.body;
-    try {
-        const recipe = await Recipe.findById(req.params.id);
-        if (!recipe) {
-            return res.status(404).json({ message: 'Recipe not found' });
+        // Check if any recipes were found
+        if (recipes.length === 0) {
+            return res.status(404).json({ message: 'No recipes found for the given ingredients and dietary preferences.' });
         }
-        recipe.ratings.push({ userId, rating });
-        await recipe.save();
-        res.status(200).json(recipe);
-    } catch (error) {
-        res.status(500).json({ message: 'Error rating recipe', error });
-    }
-});
 
-// Get recipe by ID
-router.get('/:id', async (req, res) => {
-    try {
-        const recipe = await Recipe.findById(req.params.id).populate('userId', 'username');
-        if (!recipe) {
-            return res.status(404).json({ message: 'Recipe not found' });
-        }
-        res.status(200).json(recipe);
+        // Return the found recipes
+        return res.status(200).json(recipes);
     } catch (error) {
-        res.status(500).json({ message: 'Error fetching recipe', error });
-    }
-});
-
-// Delete a recipe
-router.delete('/:id', async (req, res) => {
-    try {
-        const recipe = await Recipe.findByIdAndDelete(req.params.id);
-        if (!recipe) {
-            return res.status(404).json({ message: 'Recipe not found' });
-        }
-        res.status(200).json({ message: 'Recipe deleted successfully' });
-    } catch (error) {
-        res.status(500).json({ message: 'Error deleting recipe', error });
+        console.error('Error fetching recipes:', error);
+        return res.status(500).json({ error: 'An error occurred while fetching recipes.' });
     }
 });
 
