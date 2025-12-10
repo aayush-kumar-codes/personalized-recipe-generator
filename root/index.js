@@ -1,72 +1,65 @@
-#!/bin/bash
+// root/.env
+MONGODB_URI=mongodb://localhost:27017/mydatabase
+PORT=5000
+NODE_ENV=production
+JWT_SECRET=your_jwt_secret
 
-# Initialize a new Git repository
-git init
-
-# Create project directories
-mkdir -p root/server
-mkdir -p root/client/src
-mkdir -p root/client/public
-
-# Create package.json for Node.js server
-cat <<EOL > root/server/package.json
+// root/package.json
 {
-  "name": "my-app-server",
+  "name": "my-web-app",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node server.js",
+    "build": "cd client && npm install && npm run build",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "dependencies": {
     "express": "^4.17.1",
     "mongoose": "^5.10.9",
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "cors": "^2.8.5",
+    "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
   }
 }
-EOL
 
-# Create index.js for Node.js server
-cat <<EOL > root/server/index.js
+// root/server.js
 const express = require('express');
 const mongoose = require('mongoose');
-require('dotenv').config();
+const cors = require('cors');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
+app.use(cors());
 app.use(express.json());
 
-// MongoDB connection
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error('MongoDB connection error:', err));
+  .catch(err => {
+    console.error('MongoDB connection error:', err);
+    process.exit(1);
+  });
 
-// Basic route
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
 
-// Start server
+// Add your routes here
+
 app.listen(PORT, () => {
-  console.log(\`Server is running on port \${PORT}\`);
+  console.log(`Server is running on port ${PORT}`);
 });
-EOL
 
-# Create .env file for environment variables
-cat <<EOL > root/server/.env
-MONGODB_URI=mongodb://localhost:27017/myapp
-PORT=5000
-EOL
-
-# Create package.json for React client
-cat <<EOL > root/client/package.json
+// root/client/package.json
 {
-  "name": "my-app-client",
+  "name": "client",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
@@ -79,52 +72,49 @@ cat <<EOL > root/client/package.json
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
-EOL
 
-# Initialize React app
-cd root/client
-npx create-react-app . 
+// root/client/src/index.js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import './index.css';
 
-# Create a basic App.js
-cat <<EOL > root/client/src/App.js
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+
+// root/client/src/App.js
 import React from 'react';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Welcome to My App</h1>
-      </header>
+      <h1>Welcome to My Web App</h1>
     </div>
   );
 }
 
 export default App;
-EOL
-
-# Create a README file
-cat <<EOL > root/README.md
-# My App
-
-This is a full-stack application using Node.js, React, and MongoDB.
-
-## Getting Started
-
-### Server
-
-1. Navigate to the server directory: \`cd server\`
-2. Install dependencies: \`npm install\`
-3. Start the server: \`npm run dev\`
-
-### Client
-
-1. Navigate to the client directory: \`cd client\`
-2. Install dependencies: \`npm install\`
-3. Start the client: \`npm start\`
-EOL
-
-# Add all files to Git
-git add .
-git commit -m "Initial project structure setup for Node.js and React application"
