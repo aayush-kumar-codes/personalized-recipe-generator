@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const Recipe = require('../models/Recipe'); // Assuming Recipe model is defined in models/Recipe.js
-const mongoose = require('mongoose');
 
 // POST route to get recipe suggestions based on ingredients and dietary preferences
 router.post('/suggest', async (req, res) => {
