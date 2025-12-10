@@ -1,53 +1,38 @@
 const express = require('express');
 const router = express.Router();
-const Recipe = require('../models/Recipe');
-const MealPlan = require('../models/MealPlan');
+const Recipe = require('../models/Recipe'); // Assuming Recipe model exists
+const ShoppingList = require('../models/ShoppingList'); // Assuming ShoppingList model exists
 
-// Generate shopping list based on selected recipes and meal plans
+// POST route to generate shopping list
 router.post('/generate', async (req, res) => {
-    const { recipeIds, mealPlanId } = req.body;
+    const { mealPlan } = req.body;
 
-    if (!recipeIds || !Array.isArray(recipeIds) || recipeIds.length === 0) {
-        return res.status(400).json({ error: 'Invalid recipe IDs' });
+    if (!mealPlan || !Array.isArray(mealPlan)) {
+        return res.status(400).json({ error: 'Invalid meal plan provided' });
     }
 
     try {
-        const recipes = await Recipe.find({ _id: { $in: recipeIds } });
-        const mealPlan = await MealPlan.findById(mealPlanId);
+        const ingredients = new Map();
 
-        if (!mealPlan) {
-            return res.status(404).json({ error: 'Meal plan not found' });
+        for (const recipeId of mealPlan) {
+            const recipe = await Recipe.findById(recipeId);
+            if (!recipe) {
+                return res.status(404).json({ error: `Recipe with ID ${recipeId} not found` });
+            }
+
+            recipe.ingredients.forEach(ingredient => {
+                const existingQuantity = ingredients.get(ingredient.name) || 0;
+                ingredients.set(ingredient.name, existingQuantity + ingredient.quantity);
+            });
         }
 
-        const shoppingList = {};
+        const shoppingList = new ShoppingList({ ingredients: Array.from(ingredients.entries()).map(([name, quantity]) => ({ name, quantity })) });
+        await shoppingList.save();
 
-        // Aggregate ingredients from selected recipes
-        recipes.forEach(recipe => {
-            recipe.ingredients.forEach(ingredient => {
-                const { name, quantity, unit } = ingredient;
-                const key = `${name}-${unit}`;
-                if (shoppingList[key]) {
-                    shoppingList[key].quantity += quantity;
-                } else {
-                    shoppingList[key] = { name, quantity, unit };
-                }
-            });
-        });
-
-        // Optionally, add meal plan specific items
-        mealPlan.additionalItems.forEach(item => {
-            const key = `${item.name}-${item.unit}`;
-            if (shoppingList[key]) {
-                shoppingList[key].quantity += item.quantity;
-            } else {
-                shoppingList[key] = { name: item.name, quantity: item.quantity, unit: item.unit };
-            }
-        });
-
-        res.status(200).json({ shoppingList: Object.values(shoppingList) });
+        return res.status(201).json({ message: 'Shopping list generated successfully', shoppingList });
     } catch (error) {
         console.error('Error generating shopping list:', error);
-        res.status(500).json({ error: 'Internal server error' });
+        return res.status(500).json({ error: 'An error occurred while generating the shopping list' });
     }
 });
 
