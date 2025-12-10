@@ -18,16 +18,16 @@ router.post('/create', [
     const { userId, meals } = req.body;
 
     try {
-        const mealPlan = new MealPlan({ userId, meals });
-        await mealPlan.save();
-        res.status(201).json(mealPlan);
+        const newMealPlan = new MealPlan({ userId, meals });
+        await newMealPlan.save();
+        res.status(201).json(newMealPlan);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' });
     }
 });
 
-// Get meal plan by user ID
+// Get meal plan for a user
 router.get('/:userId', async (req, res) => {
     const { userId } = req.params;
 
@@ -36,7 +36,7 @@ router.get('/:userId', async (req, res) => {
         if (!mealPlan) {
             return res.status(404).json({ message: 'Meal plan not found' });
         }
-        res.json(mealPlan);
+        res.status(200).json(mealPlan);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' });
@@ -58,11 +58,16 @@ router.put('/update/:userId', [
     const { meals } = req.body;
 
     try {
-        const mealPlan = await MealPlan.findOneAndUpdate({ userId }, { meals }, { new: true });
-        if (!mealPlan) {
+        const updatedMealPlan = await MealPlan.findOneAndUpdate(
+            { userId },
+            { meals },
+            { new: true, runValidators: true }
+        );
+
+        if (!updatedMealPlan) {
             return res.status(404).json({ message: 'Meal plan not found' });
         }
-        res.json(mealPlan);
+        res.status(200).json(updatedMealPlan);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' });
@@ -74,11 +79,11 @@ router.delete('/:userId', async (req, res) => {
     const { userId } = req.params;
 
     try {
-        const mealPlan = await MealPlan.findOneAndDelete({ userId });
-        if (!mealPlan) {
+        const deletedMealPlan = await MealPlan.findOneAndDelete({ userId });
+        if (!deletedMealPlan) {
             return res.status(404).json({ message: 'Meal plan not found' });
         }
-        res.json({ message: 'Meal plan deleted' });
+        res.status(204).send();
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' });
