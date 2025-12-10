@@ -5,7 +5,7 @@ const router = express.Router();
 const ReviewSchema = new mongoose.Schema({
     recipeId: { type: mongoose.Schema.Types.ObjectId, ref: 'Recipe', required: true },
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    rating: { type: Number, required: true, min: 1, max: 5 },
+    rating: { type: Number, min: 1, max: 5, required: true },
     review: { type: String, required: true },
     createdAt: { type: Date, default: Date.now }
 });
@@ -23,10 +23,9 @@ router.post('/', async (req, res) => {
     try {
         const newReview = new Review({ recipeId, userId, rating, review });
         await newReview.save();
-        res.status(201).json(newReview);
+        return res.status(201).json(newReview);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error' });
+        return res.status(500).json({ message: 'Server error', error: error.message });
     }
 });
 
@@ -36,26 +35,40 @@ router.get('/:recipeId', async (req, res) => {
 
     try {
         const reviews = await Review.find({ recipeId }).populate('userId', 'username');
-        res.status(200).json(reviews);
+        return res.status(200).json(reviews);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error' });
+        return res.status(500).json({ message: 'Server error', error: error.message });
+    }
+});
+
+// PUT: Update a review
+router.put('/:id', async (req, res) => {
+    const { id } = req.params;
+    const { rating, review } = req.body;
+
+    try {
+        const updatedReview = await Review.findByIdAndUpdate(id, { rating, review }, { new: true });
+        if (!updatedReview) {
+            return res.status(404).json({ message: 'Review not found' });
+        }
+        return res.status(200).json(updatedReview);
+    } catch (error) {
+        return res.status(500).json({ message: 'Server error', error: error.message });
     }
 });
 
 // DELETE: Delete a review
-router.delete('/:reviewId', async (req, res) => {
-    const { reviewId } = req.params;
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params;
 
     try {
-        const deletedReview = await Review.findByIdAndDelete(reviewId);
+        const deletedReview = await Review.findByIdAndDelete(id);
         if (!deletedReview) {
             return res.status(404).json({ message: 'Review not found' });
         }
-        res.status(200).json({ message: 'Review deleted successfully' });
+        return res.status(200).json({ message: 'Review deleted successfully' });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error' });
+        return res.status(500).json({ message: 'Server error', error: error.message });
     }
 });
 
