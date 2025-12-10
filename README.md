@@ -1,14 +1,14 @@
 # Personalized Recipe Generator ![Build Status](https://img.shields.io/badge/build-passing-brightgreen) ![Version](https://img.shields.io/badge/version-1.0.0-blue) ![License](https://img.shields.io/badge/license-MIT-yellowgreen)
 
 ## Project Description
-The **Personalized Recipe Generator** is a web application designed to help home cooks, food enthusiasts, and individuals optimize their meal planning. Users can input available ingredients and dietary preferences to generate personalized recipes, save their favorites, plan meals for the week, and create shopping lists based on their selections.
+The **Personalized Recipe Generator** is a web application designed to help home cooks, food enthusiasts, and individuals with dietary restrictions discover meal inspiration. By inputting available ingredients and dietary preferences, users receive personalized recipe suggestions. Additionally, users can share their own recipes and create shopping lists based on selected meals.
 
 ## Features
 - User authentication and profile management
-- Ingredient-based recipe suggestions
-- Meal planning and shopping list generation
-- User ratings and reviews for recipes
-- Integration with external APIs for nutritional information
+- Ingredient input with dietary preferences and restrictions
+- AI-driven recipe suggestions based on available ingredients
+- User-generated recipe sharing and rating system
+- Shopping list generation based on selected recipes
 
 ## Tech Stack
 ### Frontend
@@ -32,20 +32,24 @@ cd personalized-recipe-generator
 - Install the dependencies
 bash
 npm install
-- Set up your environment variables (create a `.env` file)
+- Set up environment variables (create a `.env` file)
 bash
 touch .env
 - Start the development server
 bash
 npm start
 ## Usage
-Once the application is running, navigate to `http://localhost:3000` in your web browser. You can create an account, log in, and start generating personalized recipes based on your available ingredients and dietary preferences.
+1. Open your web browser and navigate to `http://localhost:3000`.
+2. Create an account or log in to your existing profile.
+3. Input your available ingredients and dietary preferences.
+4. Explore personalized recipe suggestions and save your favorites.
+5. Share your own recipes and generate shopping lists based on selected meals.
 
 ## API Documentation
 For detailed API documentation, please refer to the [API Documentation](https://github.com/aayush-kumar-codes/personalized-recipe-generator/wiki/API-Documentation).
 
 ## Testing
-To run the tests for this project, use the following command:
+To run tests for the project, use the following command:
 bash
 npm test
 ## Deployment
@@ -54,19 +58,19 @@ To deploy the application, follow these steps:
 - Build the application
 bash
 npm run build
-- Deploy the `build` folder to your preferred hosting service.
+- Deploy the `build` folder to your preferred hosting service (e.g., Heroku, Vercel).
 
 ## Contributing
 We welcome contributions! Please follow these steps to contribute:
 
-- Fork the repository
-- Create a new branch (`git checkout -b feature/YourFeature`)
-- Make your changes and commit them (`git commit -m 'Add some feature'`)
-- Push to the branch (`git push origin feature/YourFeature`)
-- Open a pull request
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature/YourFeature`).
+3. Make your changes and commit them (`git commit -m 'Add some feature'`).
+4. Push to the branch (`git push origin feature/YourFeature`).
+5. Open a pull request.
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
-- Special thanks to the contributors and the open-source community for their invaluable support and resources.
+- Special thanks to the contributors and the open-source community for their support and inspiration.
