@@ -1,90 +1,60 @@
-# Personalized Recipe Generator ![Build Status](https://img.shields.io/badge/build-passing-brightgreen) ![Version](https://img.shields.io/badge/version-1.0.0-blue) ![License](https://img.shields.io/badge/license-MIT-yellowgreen)
+# README.md
 
-## Project Description
-The **Personalized Recipe Generator** is a web application designed to help home cooks, food enthusiasts, and individuals simplify meal planning. Users can input available ingredients and dietary preferences to generate personalized recipes. The app allows users to save their favorite recipes, create meal plans, and generate shopping lists based on their selections.
+# Project Title: Web App
 
-## Features
-- User authentication and profile management
-- Ingredient-based recipe suggestions
-- Meal planning and shopping list generation
-- User ratings and reviews for recipes
-- Integration with external APIs for nutritional information
+## Description
+This is a web application built with Node.js, React, and MongoDB. This README file provides an overview of the project setup and instructions for getting started.
 
-## Tech Stack
-### Frontend
-- **React** ![React](https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=black)
+## Project Structure
+/web-app
+|-- /client          # React frontend
+|-- /server          # Node.js backend
+|-- /config          # Configuration files
+|-- /models          # MongoDB models
+|-- /routes          # API routes
+|-- /controllers     # Business logic
+|-- /middleware      # Middleware functions
+|-- /utils           # Utility functions
+|-- .gitignore       # Git ignore file
+|-- package.json     # Node.js dependencies
+|-- README.md        # Project documentation
+## Getting Started
 
-### Backend
-- **Node.js** ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=nodedotjs&logoColor=white)
+### Prerequisites
+- Node.js (v14 or higher)
+- MongoDB (local or cloud instance)
+- Git
 
-### Database
-- **MongoDB** ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat&logo=mongodb&logoColor=white)
+### Installation
 
-## Installation
-To set up the project locally, follow these steps:
+1. Clone the repository:
+   git clone <repository-url>
 
-- Clone the repository
-bash
-git clone https://github.com/aayush-kumar-codes/personalized-recipe-generator.git
-- Navigate to the project directory
-bash
-cd personalized-recipe-generator
-- Install dependencies for the backend
-bash
-cd backend
-npm install
-- Install dependencies for the frontend
-bash
-cd ../frontend
-npm install
-- Set up environment variables (create a `.env` file in the backend directory)
-bash
-touch .env
-- Start the backend server
-bash
-cd ../backend
-npm start
-- Start the frontend server
-bash
-cd ../frontend
-npm start
-## Usage
-1. Open your web browser and navigate to `http://localhost:3000`.
-2. Create an account or log in to your existing profile.
-3. Input your available ingredients and dietary preferences.
-4. Browse personalized recipe suggestions, save your favorites, and create meal plans.
+2. Navigate to the project directory:
+   cd web-app
 
-## API Documentation
-For detailed API documentation, please refer to the [API Documentation](https://github.com/aayush-kumar-codes/personalized-recipe-generator/wiki/API-Documentation).
+3. Install server dependencies:
+   cd server
+   npm install
 
-## Testing
-To run tests for the project, follow these steps:
+4. Install client dependencies:
+   cd ../client
+   npm install
 
-- Navigate to the backend directory
-bash
-cd backend
-- Run the tests
-bash
-npm test
-## Deployment
-To deploy the application, follow these steps:
+### Running the Application
 
-- Build the frontend
-bash
-cd frontend
-npm run build
-- Deploy the backend and frontend to your preferred hosting service (e.g., Heroku, AWS, etc.).
+1. Start the MongoDB server (if using a local instance).
 
-## Contributing
-We welcome contributions! Please follow these guidelines:
+2. Start the backend server:
+   cd ../server
+   npm start
 
-- Fork the repository
-- Create a new branch for your feature or bug fix
-- Make your changes and commit them
-- Push your branch and create a pull request
+3. Start the frontend application:
+   cd ../client
+   npm start
 
-## License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+### Contributing
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests.
 
-## Acknowledgments
-- Special thanks to the contributors and the open-source community for their invaluable resources and support.
+### License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
