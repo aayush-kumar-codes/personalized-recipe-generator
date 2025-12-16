@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema({
 // Error handling for schema validation
 userSchema.post('save', function(error, doc, next) {
     if (error.name === 'MongoError' && error.code === 11000) {
-        next(new Error('Username or email already exists'));
+        next(new Error('Username or email already exists.'));
     } else {
         next(error);
     }
