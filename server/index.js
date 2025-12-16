@@ -11,19 +11,14 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // MongoDB connection
-const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/mydatabase';
+const mongoURI = 'your_mongodb_connection_string_here';
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.error('MongoDB connection error:', err));
 
-// Basic routing
+// Sample route
 app.get('/', (req, res) => {
     res.send('Welcome to the Node.js server!');
-});
-
-// Example route
-app.get('/api/example', (req, res) => {
-    res.json({ message: 'This is an example route' });
 });
 
 // Error handling middleware
