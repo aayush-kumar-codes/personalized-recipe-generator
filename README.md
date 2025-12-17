@@ -1,7 +1,7 @@
 # Personalized Recipe Generator ![Build Status](https://img.shields.io/badge/build-passing-brightgreen) ![Version](https://img.shields.io/badge/version-1.0.0-blue) ![License](https://img.shields.io/badge/license-MIT-yellowgreen)
 
 ## Project Description
-The **Personalized Recipe Generator** is a web application designed to help home cooks and food enthusiasts create personalized meal plans based on their available ingredients and dietary preferences. Users can save their favorite recipes, plan meals for the week, and generate shopping lists, making meal preparation easier and more efficient.
+The **Personalized Recipe Generator** is a web application designed to help home cooks, food enthusiasts, and individuals looking to optimize their meal planning. Users can input available ingredients and dietary preferences to generate personalized recipe suggestions. The app allows users to save their favorite recipes, create meal plans, and generate shopping lists based on their selections.
 
 ## Features
 - User authentication and profile management
@@ -32,18 +32,14 @@ cd personalized-recipe-generator
 - Install the dependencies
 bash
 npm install
-- Set up your environment variables (create a `.env` file)
+- Set up environment variables (create a `.env` file)
 bash
 touch .env
 - Start the development server
 bash
 npm start
 ## Usage
-1. Open your web browser and navigate to `http://localhost:3000`.
-2. Create an account or log in to your existing profile.
-3. Input your available ingredients and dietary preferences.
-4. Browse personalized recipe suggestions and save your favorites.
-5. Plan your meals for the week and generate shopping lists.
+Once the application is running, navigate to `http://localhost:3000` in your web browser. You can create an account, log in, and start generating personalized recipes based on your available ingredients and dietary preferences.
 
 ## API Documentation
 For detailed API documentation, please refer to the [API Documentation](https://github.com/aayush-kumar-codes/personalized-recipe-generator/wiki/API-Documentation).
@@ -61,11 +57,13 @@ npm run build
 - Deploy the `build` folder to your preferred hosting service.
 
 ## Contributing
-We welcome contributions! Please follow these guidelines:
+We welcome contributions! Please follow these steps to contribute:
+
 - Fork the repository
-- Create a new branch for your feature or bug fix
-- Make your changes and commit them
-- Push your branch and create a pull request
+- Create a new branch (`git checkout -b feature/YourFeature`)
+- Make your changes and commit them (`git commit -m 'Add some feature'`)
+- Push to the branch (`git push origin feature/YourFeature`)
+- Open a pull request
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
