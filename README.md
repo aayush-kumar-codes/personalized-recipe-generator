@@ -1,24 +1,24 @@
 # Personalized Recipe Generator ![Build Status](https://img.shields.io/badge/build-passing-brightgreen) ![Version](https://img.shields.io/badge/version-1.0.0-blue) ![License](https://img.shields.io/badge/license-MIT-yellowgreen)
 
 ## Project Description
-The **Personalized Recipe Generator** is a web application designed to help home cooks, food enthusiasts, and individuals looking to optimize their meal planning. Users can input available ingredients and dietary preferences to generate personalized recipe suggestions. The app allows users to save their favorite recipes, create meal plans, and generate shopping lists based on their selections.
+The **Personalized Recipe Generator** is a web application designed to help home cooks, food enthusiasts, and individuals with dietary restrictions find meal inspiration. Users can input their available ingredients and dietary preferences to receive personalized recipe suggestions. The application utilizes a MongoDB database for storing user profiles and recipes, while Node.js and React power the backend and frontend, respectively.
 
 ## Features
 - User authentication and profile management
-- Ingredient-based recipe suggestions
-- Meal planning and shopping list generation
-- User ratings and reviews for recipes
-- Integration with external APIs for nutritional information
+- Ingredient input with dietary preferences and restrictions
+- AI-driven recipe suggestions based on available ingredients
+- Save and share favorite recipes
+- Community feature for users to submit and rate recipes
 
 ## Tech Stack
 ### Frontend
-- **React** ![React](https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=black)
+- React 🌐
 
 ### Backend
-- **Node.js** ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=nodedotjs&logoColor=white)
+- Node.js 🚀
 
 ### Database
-- **MongoDB** ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat&logo=mongodb&logoColor=white)
+- MongoDB 🗄️
 
 ## Installation
 To set up the project locally, follow these steps:
@@ -29,36 +29,51 @@ git clone https://github.com/aayush-kumar-codes/personalized-recipe-generator.gi
 - Navigate to the project directory
 bash
 cd personalized-recipe-generator
-- Install the dependencies
+- Install the backend dependencies
 bash
+cd backend
 npm install
-- Set up environment variables (create a `.env` file)
+- Install the frontend dependencies
 bash
-touch .env
-- Start the development server
+cd ../frontend
+npm install
+- Set up your environment variables (refer to `.env.example` for required variables)
+- Start the backend server
 bash
+cd ../backend
+npm start
+- Start the frontend server
+bash
+cd ../frontend
 npm start
 ## Usage
-Once the application is running, navigate to `http://localhost:3000` in your web browser. You can create an account, log in, and start generating personalized recipes based on your available ingredients and dietary preferences.
+1. Open your web browser and navigate to `http://localhost:3000`.
+2. Create an account or log in to your existing profile.
+3. Input your available ingredients and dietary preferences.
+4. Explore personalized recipe suggestions and save your favorites!
 
 ## API Documentation
 For detailed API documentation, please refer to the [API Documentation](https://github.com/aayush-kumar-codes/personalized-recipe-generator/wiki/API-Documentation).
 
 ## Testing
-To run the tests for this project, use the following command:
+To run tests for the backend, navigate to the backend directory and execute:
 bash
+cd backend
+npm test
+For frontend tests, navigate to the frontend directory and execute:
+bash
+cd frontend
 npm test
 ## Deployment
 To deploy the application, follow these steps:
-
-- Build the application
+- Build the frontend
 bash
+cd frontend
 npm run build
-- Deploy the `build` folder to your preferred hosting service.
+- Deploy the backend and frontend to your preferred hosting service (e.g., Heroku, Vercel).
 
 ## Contributing
-We welcome contributions! Please follow these steps to contribute:
-
+We welcome contributions! Please follow these steps:
 - Fork the repository
 - Create a new branch (`git checkout -b feature/YourFeature`)
 - Make your changes and commit them (`git commit -m 'Add some feature'`)
